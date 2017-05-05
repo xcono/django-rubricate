@@ -10,8 +10,6 @@ Tests for `django-rubricate` models module.
 
 from django.test import TestCase
 
-from rubricate import models
-
 
 class TestRubricate(TestCase):
 
