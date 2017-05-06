@@ -5,7 +5,7 @@ function DjangoRubricate(appElement, input)
 
     this.options = {
         defaultData: input.value.length > 2 ? JSON.parse(JSON.parse(input.value)) : {}, // escaped json parsed twice
-        uploadUrl: function () {return '/rubricate/uploads/add'},
+        uploadUrl: function () {return input.getAttribute('data-upload-url')},
         csrfToken: function () {return ''},
     };
 

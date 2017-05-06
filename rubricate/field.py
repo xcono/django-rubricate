@@ -1,6 +1,7 @@
 import json
 from django.db.models import Field
 from django.forms import HiddenInput
+from django.urls import reverse
 from jsonfield.fields import JSONField
 from rubricate.uploads import uploads_process
 
@@ -25,7 +26,7 @@ class RubricateWidget(HiddenInput):
         )
 
     def render(self, name, value, attrs=None):
-        attrs.update({'class': 'rubricate-input'})
+        attrs.update({'class': 'rubricate-input', 'data-upload-url': reverse('rubricate__attachment_add')})
         return super().render(name, value, attrs)
 
 
