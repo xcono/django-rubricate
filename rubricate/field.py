@@ -5,7 +5,7 @@ from jsonfield.fields import JSONField
 from rubricate.uploads import uploads_process
 
 
-class InlkeWidget(HiddenInput):
+class RubricateWidget(HiddenInput):
 
     class Media:
         css = {
@@ -25,7 +25,7 @@ class InlkeWidget(HiddenInput):
         )
 
 
-class InkleField(JSONField):
+class RubricateField(JSONField):
 
     def save_form_data(self, instance, data):
 
@@ -36,10 +36,10 @@ class InkleField(JSONField):
 
     def __init__(self, *args, **kwargs):
         kwargs['default'] = '{}'
-        super(InkleField, self).__init__(*args, **kwargs)
+        super(RubricateField, self).__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
 
-        defaults = {'max_length': self.max_length, 'widget': InlkeWidget}
+        defaults = {'max_length': self.max_length, 'widget': RubricateWidget}
         kwargs.update(defaults)
         return Field.formfield(self, **kwargs)
