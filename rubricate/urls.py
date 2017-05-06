@@ -2,5 +2,5 @@ from django.conf.urls import url
 from rubricate import views
 
 urlpatterns = [
-    url(r'^attachment/add$', views.attachment_add),
+    url(r'^uploads/add$', views.attachment_add),
 ]

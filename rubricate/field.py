@@ -2,8 +2,7 @@ import json
 from django.db.models import Field
 from django.forms import HiddenInput
 from jsonfield.fields import JSONField
-
-from rubricate.attachments import attachment_process
+from rubricate.uploads import uploads_process
 
 
 class InlkeWidget(HiddenInput):
@@ -31,7 +30,7 @@ class InkleField(JSONField):
     def save_form_data(self, instance, data):
 
         json_string = json.loads(data)
-        json_string = attachment_process(json_string)
+        json_string = uploads_process(json_string)
         data = json.dumps(json_string, self.dump_kwargs)
         super().save_form_data(instance, data)
 

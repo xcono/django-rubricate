@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/xcono/django-rubricate.svg?branch=master
+    :target: https://travis-ci.org/xcono/django-rubricate
+
 =============================
 Django Rubricate
 =============================

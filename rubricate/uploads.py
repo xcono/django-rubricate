@@ -7,7 +7,7 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 
 
-def attachment_upload(file):
+def save_temporary(file):
     """
     Move file to os temporary folder.
     :param file:
@@ -18,28 +18,28 @@ def attachment_upload(file):
     return fs.path(filename)
 
 
-def attachment_process(stream_data):
+def uploads_process(json_data):
 
-    for plugin in stream_data.get('plugins', []):
+    for plugin in json_data.get('plugins', []):
         if plugin.get('uploads'):
             for key, attachment in enumerate(plugin.get('uploads')):
 
                 # move temporary file to permanent directory
                 if attachment.get('temp'):
-                    attachment_save(attachment)
+                    uploads_save(attachment)
 
                 # remove attachment marked as "remove"
                 if attachment.get('remove'):
-                    attachment_remove(attachment)
+                    uploads_remove(attachment)
                     plugin.get('uploads').remove(attachment)
 
-    for attachment in stream_data.get('uploads_remove', []):
-        attachment_remove(attachment)
+    for attachment in json_data.get('uploads_remove', []):
+        uploads_remove(attachment)
 
-    return stream_data
+    return json_data
 
 
-def attachment_save(attachment):
+def uploads_save(attachment):
 
     # don't rise any exception if temporary file doesn't exist
     if not os.path.exists(attachment['path']):
@@ -69,7 +69,7 @@ def attachment_save(attachment):
     attachment['size'] = os.path.getsize(path)
 
 
-def attachment_remove(attachment):
+def uploads_remove(attachment):
     try:
         os.remove(attachment['path'])
     except OSError:

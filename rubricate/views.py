@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from rubricate import attachments
+from rubricate import uploads
 
 
 @csrf_exempt
@@ -24,7 +24,7 @@ def attachment_add(request):
 
             try:
                 code = 200
-                response['path'] = attachments.attachment_upload(file)
+                response['path'] = uploads.save_temporary(file)
                 response['message'] = 'Successfully uploaded.'
             except Exception as e:
                 code = 204

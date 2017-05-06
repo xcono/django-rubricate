@@ -5,7 +5,7 @@ function DjangoStream(appElement, input)
 
     this.options = {
         defaultData: input.value.length > 2 ? JSON.parse(JSON.parse(input.value)) : {}, // escaped json parsed twice
-        uploadUrl: function () {return '/inkle/attachment/add'},
+        uploadUrl: function () {return '/rubricate/uploads/add'},
         csrfToken: function () {return ''},
     };
 
