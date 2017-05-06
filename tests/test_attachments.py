@@ -20,10 +20,11 @@ class TestRubricate(TestCase):
     def test_upload(self):
         # Create an instance of a POST request.
         with open('tests/filemock.jpg', 'rb') as fp:
+            # test request
             response = self.client.post('/attachment/add', {'name': 'filemock.jpg', 'file': fp})
             self.assertEqual(response.status_code, 200)
-
-            data = json.loads(str(response.content, encoding='utf8'))
+            # test response
+            data = json.loads(response.content.decode("utf-8"))
             self.assertEqual(os.path.exists(data.get('path')), True)
 
     def tearDown(self):
