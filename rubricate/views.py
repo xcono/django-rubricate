@@ -16,13 +16,15 @@ def attachment_add(request):
 
     if request.method == "POST":
 
-        if request.FILES['file']:
+        file = request.FILES.get('file', None)
 
-            response['filename'] = request.FILES['file'].name
+        if file:
+
+            response['filename'] = file.name
 
             try:
                 code = 200
-                response['path'] = attachments.attachment_upload(request.FILES['file'])
+                response['path'] = attachments.attachment_upload(file)
                 response['message'] = 'Successfully uploaded.'
             except Exception as e:
                 code = 204

@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+test_django-rubricate
+------------
+
+Tests for `django-rubricate` models module.
+"""
+import json
+import os
+from django.test import TestCase, Client
+
+
+class TestRubricate(TestCase):
+
+    def setUp(self):
+        pass
+
+    def test_upload(self):
+        # Create an instance of a POST request.
+        with open('tests/filemock.jpg', 'rb') as fp:
+            response = self.client.post('/attachment/add', {'name': 'filemock.jpg', 'file': fp})
+            self.assertEqual(response.status_code, 200)
+
+            data = json.loads(str(response.content, encoding='utf8'))
+            self.assertEqual(os.path.exists(data.get('path')), True)
+
+    def tearDown(self):
+        pass

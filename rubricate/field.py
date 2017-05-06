@@ -44,4 +44,3 @@ class InkleField(JSONField):
         defaults = {'max_length': self.max_length, 'widget': InlkeWidget}
         kwargs.update(defaults)
         return Field.formfield(self, **kwargs)
-
