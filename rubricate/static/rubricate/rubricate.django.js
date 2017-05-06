@@ -1,4 +1,4 @@
-function DjangoStream(appElement, input)
+function DjangoRubricate(appElement, input)
 {
     this.el = appElement;
     this.input = input;
@@ -16,7 +16,7 @@ function DjangoStream(appElement, input)
     }.bind(this);
 }
 
-DjangoStream.prototype.getModelFormElement = function()
+DjangoRubricate.prototype.getModelFormElement = function()
 {
     // get closest parent form element to stream app element
     var el = this.el;
@@ -25,12 +25,13 @@ DjangoStream.prototype.getModelFormElement = function()
 };
 
 window.addEventListener('load', function () {
-    [].forEach.call(document.getElementsByClassName('field-inkle'), function (el) {
-        var app = document.createElement('div');
-        el.classList.remove('hidden');
-        el.appendChild(app);
+    [].forEach.call(document.getElementsByClassName('rubricate-input'), function (input) {
 
-        var input = document.getElementById('id_inkle');
-        new DjangoStream(app, input);
+        var app = document.createElement('div');
+        var form_row = input.parentNode.parentNode;
+        form_row.classList.remove('hidden');
+        form_row.appendChild(app);
+
+        new DjangoRubricate(app, input);
     });
 });

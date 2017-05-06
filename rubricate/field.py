@@ -24,6 +24,10 @@ class RubricateWidget(HiddenInput):
             'rubricate/rubricate.django.js'
         )
 
+    def render(self, name, value, attrs=None):
+        attrs.update({'class': 'rubricate-input'})
+        return super().render(name, value, attrs)
+
 
 class RubricateField(JSONField):
 
