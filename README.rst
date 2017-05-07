@@ -29,6 +29,13 @@ Add it to your `INSTALLED_APPS`:
         ...
     )
 
+Configure your `MEDIA_ROOT` and `MEDIA_URL`:
+
+.. code-block:: python
+
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 Add Django Rubricate's URL patterns:
 
 .. code-block:: python
@@ -41,6 +48,9 @@ Add Django Rubricate's URL patterns:
         url(r'^', include(rubricate_urls)),
         ...
     ]
+
+    # you also may want to add MEDIA_URL
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 Features
 --------
