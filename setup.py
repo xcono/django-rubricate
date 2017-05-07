@@ -56,7 +56,9 @@ setup(
         'rubricate',
     ],
     include_package_data=True,
-    install_requires=[],
+    install_requires=[
+        'jsonfield>=2.0.1',
+    ],
     license="Apache Software License 2.0",
     zip_safe=False,
     keywords='django-rubricate',
