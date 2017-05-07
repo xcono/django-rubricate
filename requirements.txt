@@ -1,2 +1,2 @@
 # python libraries
-jsonfield
+jsonfield==2.0.1
