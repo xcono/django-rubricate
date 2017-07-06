@@ -33,9 +33,13 @@ class RubricateWidget(HiddenInput):
 class RubricateField(JSONField):
 
     def save_form_data(self, instance, data):
+        json_obj = json.loads(data)
 
-        json_string = json.loads(data)
-        json_string = uploads_process(json_string)
+        # todo: find why 'data' might be sorounded by double quotes and remove a statement below
+        if isinstance(json_obj, str):
+            json_obj = json.loads(json_obj)
+
+        json_string = uploads_process(json_obj)
         data = json.dumps(json_string, self.dump_kwargs)
         super().save_form_data(instance, data)
 
