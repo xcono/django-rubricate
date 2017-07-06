@@ -1,6 +1,6 @@
 {% for plugin in plugins %}
 
-    {% with 'rubric-'|add:plugin.type|rubric_css as css_block %}
+    {% with 'rubric-'|add:plugin|rubric_css as css_block %}
 
         <div class="rubric {{ css_block }}">
             <div class="rubric__fields {{ css_block }}__fields">
