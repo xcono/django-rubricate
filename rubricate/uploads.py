@@ -56,7 +56,7 @@ def uploads_save(attachment):
 
     attachment['path'] = path
     attachment['name'] = filename
-    attachment['url'] = os.path.join(settings.MEDIA_URL, filename[0], filename)
+    attachment['url'] = uploads_url(filename)
     attachment['size'] = os.path.getsize(path)
 
 
@@ -91,3 +91,7 @@ def _uploads_folder(filename):
                 'Cannot create destination folder: {0} {1}'.format(folder, str(exc)))
 
     return folder
+
+
+def uploads_url(filename):
+    return os.path.join(settings.MEDIA_URL, 'rubricate', filename[0], filename)
