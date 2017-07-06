@@ -58,6 +58,7 @@ def uploads_save(attachment):
     attachment['name'] = filename
     attachment['url'] = uploads_url(filename)
     attachment['size'] = os.path.getsize(path)
+    attachment['temp'] = 0
 
 
 def uploads_remove(attachment):
