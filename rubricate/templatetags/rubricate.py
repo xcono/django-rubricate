@@ -2,5 +2,5 @@ from django.template.defaulttags import register
 
 
 @register.filter
-def rubric_css(dictionary):
-    return dictionary.get('type', '').replace('_', '-')
+def rubric_css(rubric_type):
+    return rubric_type.replace('_', '-')
