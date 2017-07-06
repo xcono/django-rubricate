@@ -1,0 +1,31 @@
+{% for plugin in plugins %}
+
+    {% with 'rubric-'|add:plugin.type|rubric_css as css_block %}
+
+        <div class="rubric {{ css_block }}">
+            <div class="rubric__fields {{ css_block }}__fields">
+
+                {# header #}
+                {% if plugin.type == 'header_plugin' %}
+                    <h{{ plugin.values.level }}
+                            class="rubric__field {{ css_block }}__input">{{ plugin.values.input|safe }}</h{{ plugin.values.level }}>
+                {% endif %}
+
+                {# rich text #}
+                {% if plugin.type == 'rich_text_plugin' %}
+                    <div class="rubric__field {{ css_block }}__input">{{ plugin.values.input|safe }}</div>
+                {% endif %}
+
+                {# files #}
+                {% if plugin.type == 'files_plugin' %}
+                    {% for upload in plugin.uploads %}
+                        <div class="rubric__field {{ css_block }}__file">
+                            <img class="{{ css_block }}__image" src="{{ upload.url }}">
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+            </div>
+        </div>
+    {% endwith %}
+{% endfor %}
