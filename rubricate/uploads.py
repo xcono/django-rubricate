@@ -48,16 +48,7 @@ def uploads_save(attachment):
 
     ext = os.path.splitext(attachment['filename'])[1]
     filename = str(uuid.uuid4().hex) + ext
-    folder = os.path.join(settings.MEDIA_ROOT, filename[0])
-
-    # create the folder if it doesn't exist.
-    if not os.path.exists(folder):
-        try:
-            os.mkdir(folder)
-        except OSError as exc:
-            logging.error(
-                'Try to save stream attachment failed. '
-                'Cannot create destination folder: {0} {1}'.format(folder, str(exc)))
+    folder = _uploads_folder(filename)
 
     # save the uploaded file inside that folder.
     path = os.path.join(folder, filename)
@@ -74,3 +65,29 @@ def uploads_remove(attachment):
         os.remove(attachment['path'])
     except OSError:
         pass
+
+
+def _uploads_folder(filename):
+
+    rubricate_folder = os.path.join(settings.MEDIA_ROOT, 'rubricate')
+
+    if not os.path.exists(rubricate_folder):
+        try:
+            os.mkdir(rubricate_folder)
+        except OSError as exc:
+            logging.error(
+                'Cannot create rubricate files folder. '
+                'Cannot create rubricate files folder: {0} {1}'.format(rubricate_folder, str(exc)))
+
+    folder = os.path.join(rubricate_folder, filename[0])
+
+    # create the folder if it doesn't exist.
+    if not os.path.exists(folder):
+        try:
+            os.mkdir(folder)
+        except OSError as exc:
+            logging.error(
+                'Try to save stream attachment failed. '
+                'Cannot create destination folder: {0} {1}'.format(folder, str(exc)))
+
+    return folder
