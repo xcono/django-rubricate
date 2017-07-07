@@ -35,6 +35,7 @@ def uploads_process(json_data):
 
     for attachment in json_data.get('uploads_remove', []):
         uploads_remove(attachment)
+        json_data.get('uploads_remove').remove(attachment)
 
     return json_data
 
