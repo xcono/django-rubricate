@@ -22,7 +22,7 @@ def uploads_process(json_data):
 
     for plugin in json_data.get('plugins', []):
         if plugin.get('uploads'):
-            for key, attachment in enumerate(plugin.get('uploads')):
+            for attachment in plugin.get('uploads', []):
 
                 # move temporary file to permanent directory
                 if attachment.get('temp'):
