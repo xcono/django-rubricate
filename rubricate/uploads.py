@@ -22,44 +22,46 @@ def uploads_process(json_data):
 
     for plugin in json_data.get('plugins', []):
         if plugin.get('uploads'):
-            for attachment in plugin.get('uploads', []):
+            for upload in plugin.get('uploads', []):
 
                 # move temporary file to permanent directory
-                if attachment.get('temp'):
-                    uploads_save(attachment)
+                if upload.get('temp'):
+                    uploads_save(upload)
 
                 # remove attachment marked as "remove"
-                if attachment.get('remove'):
-                    uploads_remove(attachment)
-                    plugin.get('uploads').remove(attachment)
+                if upload.get('remove'):
+                    uploads_remove(upload)
+                    plugin.get('uploads').remove(upload)
 
-    for attachment in json_data.get('uploads_remove', []):
-        uploads_remove(attachment)
-        json_data.get('uploads_remove').remove(attachment)
+    for upload in json_data.get('uploads_remove', []):
+        uploads_remove(upload)
+        json_data.get('uploads_remove').remove(upload)
 
     return json_data
 
 
-def uploads_save(attachment):
+def uploads_save(upload):
 
     # don't rise any exception if temporary file doesn't exist
-    if not os.path.exists(attachment['path']):
-        attachment['remove'] = True
-        logging.error('Try to save stream attachment failed. File does not exist by path: ' + attachment['path'])
+    if not os.path.exists(upload['path']):
+        upload['remove'] = True
+        logging.error('Try to save stream attachment failed. File does not exist by path: ' + upload['path'])
 
-    ext = os.path.splitext(attachment['filename'])[1]
+    ext = os.path.splitext(upload['filename'])[1]
     filename = str(uuid.uuid4().hex) + ext
     folder = _uploads_folder(filename)
 
     # save the uploaded file inside that folder.
     path = os.path.join(folder, filename)
-    shutil.move(attachment['path'], path)
+    shutil.move(upload['path'], path)
 
-    attachment['path'] = path
-    attachment['name'] = filename
-    attachment['url'] = uploads_url(filename)
-    attachment['size'] = os.path.getsize(path)
-    attachment['temp'] = 0
+    upload.update({
+        'path': path,
+        'name': filename,
+        'url': uploads_url(filename),
+        'size': os.path.getsize(path),
+        'temp': 0,
+    })
 
 
 def uploads_remove(attachment):
