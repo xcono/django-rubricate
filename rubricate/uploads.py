@@ -76,10 +76,8 @@ def _uploads_folder(filename):
     if not os.path.exists(rubricate_folder):
         try:
             os.mkdir(rubricate_folder)
-        except OSError as exc:
-            logging.error(
-                'Cannot create rubricate files folder. '
-                'Cannot create rubricate files folder: {0} {1}'.format(rubricate_folder, str(exc)))
+        except OSError:
+            logging.error('Cannot create rubricate files folder in %s', rubricate_folder)
 
     folder = os.path.join(rubricate_folder, filename[0])
 
@@ -87,10 +85,9 @@ def _uploads_folder(filename):
     if not os.path.exists(folder):
         try:
             os.mkdir(folder)
-        except OSError as exc:
+        except OSError:
             logging.error(
-                'Try to save stream attachment failed. '
-                'Cannot create destination folder: {0} {1}'.format(folder, str(exc)))
+                'Try to save stream attachment failed in %s', folder)
 
     return folder
 
