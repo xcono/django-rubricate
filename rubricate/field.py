@@ -27,6 +27,13 @@ class RubricateWidget(HiddenInput):
 
     def render(self, name, value, attrs=None):
         attrs.update({'class': 'rubricate-input', 'data-upload-url': reverse('rubricate__attachment_add')})
+
+        # todo: find why value double stringified somewhere above the code
+        escaped = json.loads(value)
+
+        if isinstance(escaped, str):
+            value = escaped
+
         return super().render(name, value, attrs)
 
 
@@ -35,13 +42,10 @@ class RubricateField(JSONField):
     def save_form_data(self, instance, data):
         json_obj = json.loads(data)
 
-        # todo: find why 'data' might be sorounded by double quotes and remove a statement below
-        if isinstance(json_obj, str):
-            json_obj = json.loads(json_obj)
+        json_obj = uploads_process(json_obj)
+        json_string = json.dumps(json_obj, self.dump_kwargs)
 
-        json_string = uploads_process(json_obj)
-        data = json.dumps(json_string, self.dump_kwargs)
-        super().save_form_data(instance, data)
+        super().save_form_data(instance, json_string)
 
     def __init__(self, *args, **kwargs):
         kwargs['default'] = '{}'

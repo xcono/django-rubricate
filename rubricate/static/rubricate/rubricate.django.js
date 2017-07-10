@@ -3,11 +3,8 @@ function DjangoRubricate(appElement, input)
     this.el = appElement;
     this.input = input;
 
-    var defaultData = input.value.length > 2 ? JSON.parse(input.value) : {};
-    defaultData = typeof defaultData === 'string' ? JSON.parse(defaultData) : defaultData;  // escaped json parsed twice
-
     this.options = {
-        defaultData: defaultData,
+        defaultData: input.value.length > 2 ? JSON.parse(input.value) : {},
         uploadUrl: function () {return input.getAttribute('data-upload-url')},
         csrfToken: function () {return ''},
     };
@@ -15,14 +12,12 @@ function DjangoRubricate(appElement, input)
     this.app = Rubricate(this.el, this.options);
 
     var _self = this;
-    setInterval(function() {
-        // cache input data to present it in case of validation errors
+    var updateInput = function(){
         _self.input.value = JSON.stringify(_self.app.getData());
-    }, 3000)
+    };
 
-    this.getModelFormElement().onsubmit = function(){
-        this.input.value = JSON.stringify(this.app.getData());
-    }.bind(this);
+    setInterval(updateInput, 3000)
+    this.getModelFormElement().addEventListener('submit', updateInput);
 }
 
 DjangoRubricate.prototype.getModelFormElement = function()
