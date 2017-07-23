@@ -24,7 +24,7 @@ class TestRubricate(TestCase):
     def test_upload(self):
 
         logged = self.client.login(username='user', password='pass')
-        self.assertEqual(logged, True)
+        self.assertTrue(logged)
 
         # Create an instance of a POST request.
         with open('tests/filemock.jpg', 'rb') as fp:
