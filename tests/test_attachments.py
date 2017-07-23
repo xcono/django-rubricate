@@ -36,7 +36,7 @@ class TestRubricate(TestCase):
 
     def test_permissions(self):
 
-        self.client.logout()
+        # self.client.logout()
 
         # Create an instance of a POST request.
         with open('tests/filemock.jpg', 'rb') as fp:
