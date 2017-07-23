@@ -5,7 +5,7 @@
 Django Rubricate
 =============================
 
-Clean way to build content via custom blocks.
+Clean way to build content via custom blocks. Please, don't use this app in your production environment.
 
 Documentation
 -------------
@@ -51,6 +51,12 @@ Add Django Rubricate's URL patterns:
 
     # you also may want to add MEDIA_URL
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+Then run migrations to apply permissions checks::
+
+    migrate rubricate
+
+
 
 Features
 --------
