@@ -34,5 +34,15 @@ class TestRubricate(TestCase):
             data = json.loads(response.content.decode("utf-8"))
             self.assertEqual(os.path.exists(data.get('path')), True)
 
+    def test_permissions(self):
+
+        # self.client.logout()
+
+        # Create an instance of a POST request.
+        with open('tests/filemock.jpg', 'rb') as fp:
+            # test request
+            response = self.client.post('/uploads/add', {'name': 'filemock.jpg', 'file': fp})
+            self.assertEqual(response.status_code, 403)
+
     def tearDown(self):
         self.user.delete()

@@ -7,27 +7,43 @@ DEBUG = True
 USE_TZ = True
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "11111111111111111111111111111111111111111111111111"
+SECRET_KEY = '11111111111111111111111111111111111111111111111111'
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": ":memory:",
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:',
     }
 }
 
-ROOT_URLCONF = "tests.urls"
+ROOT_URLCONF = 'tests.urls'
 
 INSTALLED_APPS = [
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sites",
-    "rubricate",
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sites',
+    'rubricate',
 ]
 
 SITE_ID = 1
 
 if django.VERSION >= (1, 10):
-    MIDDLEWARE = ()
+    MIDDLEWARE = (
+        'django.middleware.security.SecurityMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    )
 else:
-    MIDDLEWARE_CLASSES = ()
+    MIDDLEWARE_CLASSES = (
+        'django.middleware.security.SecurityMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    )
