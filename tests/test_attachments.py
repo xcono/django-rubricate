@@ -10,14 +10,20 @@ Tests for `django-rubricate` models module.
 import json
 import os
 from django.test import TestCase
+from django.contrib.auth.models import User
 
 
 class TestRubricate(TestCase):
 
     def setUp(self):
-        pass
+        self.user = User.objects.create_user(username='user', password='pass')
+        self.user.user_permissions.add('rubricate.upload_files')
+        self.user.save()
 
     def test_upload(self):
+
+        self.client.login(username='user', password='pass')
+
         # Create an instance of a POST request.
         with open('tests/filemock.jpg', 'rb') as fp:
             # test request
@@ -27,5 +33,15 @@ class TestRubricate(TestCase):
             data = json.loads(response.content.decode("utf-8"))
             self.assertEqual(os.path.exists(data.get('path')), True)
 
+    def test_permissions(self):
+
+        self.client.logout()
+
+        # Create an instance of a POST request.
+        with open('tests/filemock.jpg', 'rb') as fp:
+            # test request
+            response = self.client.post('/uploads/add', {'name': 'filemock.jpg', 'file': fp})
+            self.assertEqual(response.status_code, 403)
+
     def tearDown(self):
-        pass
+        self.user.delete()
