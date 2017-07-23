@@ -10,14 +10,15 @@ Tests for `django-rubricate` models module.
 import json
 import os
 from django.test import TestCase
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 
 
 class TestRubricate(TestCase):
 
     def setUp(self):
         self.user = User.objects.create_user(username='user', password='pass')
-        self.user.user_permissions.add('rubricate.upload_files')
+        permission = Permission.objects.get(codename='rubricate.upload_files')
+        self.user.user_permissions.add(permission)
         self.user.save()
 
     def test_upload(self):
