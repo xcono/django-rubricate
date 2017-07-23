@@ -9,5 +9,5 @@ class RubricatePermissionsSupport(models.Model):
                          # will be performed for this model.
 
         permissions = (
-            ('upload_files', 'Allowed to upload files attached to rubrics'),
+            ('upload_rubricate_files', 'Allowed to upload files attached to rubrics'),
         )

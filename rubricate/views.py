@@ -6,7 +6,7 @@ from rubricate import uploads
 @csrf_exempt
 def attachment_add(request):
 
-    if not request.user.has_perm('rubricate.upload_files'):
+    if not request.user.has_perm('rubricate.upload_rubricate_files'):
         return HttpResponse(status=403, content='Upload is not allowed. You have no permissions to upload files.')
 
     if not request.method == 'POST':

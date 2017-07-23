@@ -17,7 +17,7 @@ class TestRubricate(TestCase):
 
     def setUp(self):
         self.user = User.objects.create_user(username='user', password='pass')
-        permission = Permission.objects.get(codename='rubricate.upload_files')
+        permission = Permission.objects.get(codename='upload_rubricate_files')
         self.user.user_permissions.add(permission)
         self.user.save()
 

@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'managed': False,
-                'permissions': (('upload_files', 'Allowed to upload files attached to rubrics'),),
+                'permissions': (('upload_rubricate_files', 'Allowed to upload files attached to rubrics'),),
             },
         ),
     ]
